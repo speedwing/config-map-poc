@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sleepy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sleepy
+  template:
+    metadata:
+      labels:
+        app: sleepy
+    spec:
+      containers:
+        - name: sleepy
+          image: "speedwing/sleepy:latest"
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: logback-config
+              mountPath: /opt/play/conf
+      volumes:
+        - name: logback-config
+          configMap:
+            name: logback
